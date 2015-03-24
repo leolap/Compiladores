@@ -1,0 +1,65 @@
+#Options
+GenerateScanner = true
+GenerateParser = false
+Language = Java
+ScannerName = Lexico
+ScannerCaseSensitive = true
+ScannerTable = Full
+Input = Stream
+#RegularDefinitions
+D : [0-9]
+#Tokens
+VAR : [a-z A-Z][a-z A-Z 0-9 _]*
+
+INICIO = VAR : "inicio"
+FIM   = VAR : "fim"
+SE = VAR : "se"
+SENAO = VAR : "senao"
+ENQUANTO = VAR : "enquanto"
+TINT = VAR : "int"
+TFLOAT = VAR : "float"
+TBIN = VAR : "bin"
+THEX = VAR : "hex"
+TSTRING = VAR : "string"
+COMENTARIO: [/][/][^\n\r]*
+MCOMENTARIO: /\*([^\*]|\*+[^/\*])*\*+/
+	
+"+"
+"-"
+"*"
+"/"
+"("
+")"
+"=="
+"!="
+"!"
+">="
+"<="
+"="
+"&&"
+"||"
+">>"
+"<<"
+"<"
+">"
+"&"
+"|"
+"~"
+"^"
+";"
+"."
+":"
+"["
+"]"
+"{"
+"}"
+
+HEXADECIMAL: 0x[0-9a-fA-F]+
+BINARIO : 0b[0-1]+
+INTEIRO : {D}+
+REAL: {D}+\.{D}*
+STRING: \"[^\n\r\"]*\"
+
+
+
+ : [\s\t\n\r]*
