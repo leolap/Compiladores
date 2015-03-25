@@ -70,8 +70,9 @@ STRING: \"[^\n\r\"]*\"
 <init>
 <l_cmd>
 <cmd>
+<var>
 #Grammar
 <init> ::= INICIO <l_cmd> FIM;
-<l_cmd> ::= <l_cmd> <cmd> | <cmd>;
+<l_cmd> ::= <l_cmd> <cmd> ";" | <cmd> ";";
 <cmd> ::= <var>;
-<var> ::= TINT VAR "=" INTEIRO | TFLOAT VAR "=" REAL;
+<var> ::= TINT VAR "=" INTEIRO | TFLOAT VAR "=" REAL | TBIN VAR "=" BINARIO | THEX VAR "=" HEXADECIMAL | TSTRING VAR "=" STRING;
