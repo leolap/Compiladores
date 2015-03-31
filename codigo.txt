@@ -18,7 +18,7 @@ inicio
 		}
 	}enquanto(c <= 100);
 	// escreve o ultimo valor de c
-	escreva ( c );
+	escreva ( c ); 
 	
 fim
 	
