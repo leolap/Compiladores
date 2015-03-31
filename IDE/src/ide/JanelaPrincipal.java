@@ -122,22 +122,22 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         Semantico semantico = new Semantico();
         //...
         lexico.setInput( codigo );
-        //...
+        erros = "Sem erro";
         try
         {
          sintatico.parse(lexico, semantico);
         }
         catch( LexicalError e )
         {
-         erros += e.getMessage();
+         erros = e.getMessage();
         }
         catch( SyntaticError e )
         {
-        erros += e.getMessage();
+        erros = e.getMessage();
         }
         catch ( SemanticError e )
         {
-        erros += e.getMessage();
+        erros = e.getMessage();
         }
         textAreaErros.setText(erros);
         

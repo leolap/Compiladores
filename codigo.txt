@@ -1,5 +1,6 @@
 inicio
 	funcao func(int a = 0, int b = 0){
+		int d[10] ;
 		a = a + b;
 		retorno a;
 	}
@@ -19,6 +20,9 @@ inicio
 	}enquanto(c <= 100);
 	// escreve o ultimo valor de c
 	escreva ( c ); 
+	se ( c != 100 ){
+	    leia ( c );
+	}
 	
 fim
 	
