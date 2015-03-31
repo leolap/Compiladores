@@ -18,7 +18,13 @@ INICIO = VAR : "inicio"
 FIM   = VAR : "fim"
 SE = VAR : "se"
 SENAO = VAR : "senao"
+LEIA = VAR : "leia"
+ESCREVA = VAR : "escreva"
+FUNCTION = VAR : "funcao"
+RETORNO = VAR : "retorno"
 ENQUANTO = VAR : "enquanto"
+PARA = VAR : "para"
+FACA = VAR : "faca"
 TINT = VAR : "int"
 TFLOAT = VAR : "float"
 TBIN = VAR : "bin"
@@ -51,6 +57,7 @@ MCOMENTARIO: /\*([^\*]|\*+[^/\*])*\*+/
 "~"
 "^"
 ";"
+","
 "."
 ":"
 "["
@@ -75,6 +82,13 @@ STRING: \"[^\n\r\"]*\"
 <cmdse>
 <cmdenquanto>
 <comentario>
+<paravar>
+<inout>
+<escrevavar>
+<function>
+<parametros>
+<parametrosvar>
+<retorno>
 <exp>
 <exp1>
 <exp2>
@@ -95,11 +109,18 @@ STRING: \"[^\n\r\"]*\"
 #Grammar
 <init> ::= INICIO <l_cmd> FIM;
 <l_cmd> ::= <l_cmd> <cmd>| <cmd> | <comentario> ;
-<cmd> ::= <var> ";"| <exp> ";" | <cmdse> | <cmdenquanto>;
-<var> ::= TINT VAR "=" INTEIRO | TFLOAT VAR "=" REAL | TBIN VAR "=" BINARIO | THEX VAR "=" HEXADECIMAL | TSTRING VAR "=" STRING;
+<cmd> ::= <var> ";"| <exp> ";" | <cmdse> | <cmdenquanto> | <inout>";" | <function> | <retorno> ";";
+<var> ::= TINT VAR "=" INTEIRO | TINT VAR"[" INTEIRO "]" | TFLOAT VAR "=" REAL | TBIN VAR "=" BINARIO | THEX VAR "=" HEXADECIMAL | TSTRING VAR "=" STRING | TFLOAT VAR"[" INTEIRO "]" | TBIN VAR"[" INTEIRO "]" | THEX VAR"[" INTEIRO "]" | TSTRING VAR"[" INTEIRO "]";
 <cmdse> ::= SE"(" <exp> ")" "{"<l_cmd>"}" | SE"(" <exp> ")" "{"<l_cmd>"}"SENAO "{" <l_cmd> "}" ;
-<cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}";
+<cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <exp> ")" "{" <l_cmd> "}";
+<paravar> ::= VAR | <var>;
+<inout> ::= LEIA "(" VAR ")" | ESCREVA "("<escrevavar>")";
+<escrevavar> ::= VAR | STRING;
 <comentario> ::= COMENTARIO | MCOMENTARIO;
+<function> ::= FUNCTION VAR "("<parametros>")" "{" <l_cmd> "}" | VAR "("<parametros>")" ";";
+<parametros> ::= <parametros>"," <parametrosvar> | <parametrosvar>;
+<parametrosvar> ::= <paravar> | <exp>;
+<retorno> ::= RETORNO <paravar> | RETORNO <exp>;
 <exp>  ::= <exp> "||" <exp1> | <exp1>;
 <exp1> ::= <exp1> "&&" <exp2> | <exp2>;
 <exp2> ::= <exp2> "|" <exp3> | <exp3>;
