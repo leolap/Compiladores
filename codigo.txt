@@ -1,14 +1,14 @@
 inicio
 	funcao func(int a = 0, int b = 0){
 		int d[10] ;
-		a = a + b;
+		a = a + b - c + d;
 		retorno a;
 	}
 	
 	int c = 0;
 	leia ( c );
-	se ( c > 10 ){
-	  c = func( 10, 20);
+	se ( c > 10 || c < 8 && f <=9 ){
+	  c = funcuu( 10, 20);
 	}senao{
 	  c = func( 10, 30);
 	}

@@ -108,8 +108,8 @@ STRING: \"[^\n\r\"]*\"
 <op_arit_mais_alta>
 #Grammar
 <init> ::= INICIO <l_cmd> FIM;
-<l_cmd> ::= <l_cmd> <cmd>| <cmd> | <comentario> ;
-<cmd> ::= <var> ";"| <exp> ";" | <cmdse> | <cmdenquanto> | <inout>";" | <function> | <retorno> ";";
+<l_cmd> ::= <l_cmd> <cmd>| <cmd>;
+<cmd> ::= <var> ";"| <exp> ";" | <comentario> | <cmdse> | <cmdenquanto> | <inout>";" | <function> | <retorno> ";";
 <var> ::= TINT VAR "=" INTEIRO | TINT VAR"[" INTEIRO "]" | TFLOAT VAR "=" REAL | TBIN VAR "=" BINARIO | THEX VAR "=" HEXADECIMAL | TSTRING VAR "=" STRING | TFLOAT VAR"[" INTEIRO "]" | TBIN VAR"[" INTEIRO "]" | THEX VAR"[" INTEIRO "]" | TSTRING VAR"[" INTEIRO "]";
 <cmdse> ::= SE"(" <exp> ")" "{"<l_cmd>"}" | SE"(" <exp> ")" "{"<l_cmd>"}"SENAO "{" <l_cmd> "}" ;
 <cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <exp> ")" "{" <l_cmd> "}";
@@ -117,7 +117,7 @@ STRING: \"[^\n\r\"]*\"
 <inout> ::= LEIA "(" VAR ")" | ESCREVA "("<escrevavar>")";
 <escrevavar> ::= VAR | STRING;
 <comentario> ::= COMENTARIO | MCOMENTARIO;
-<function> ::= FUNCTION VAR "("<parametros>")" "{" <l_cmd> "}" | VAR "("<parametros>")" ";";
+<function> ::= FUNCTION VAR "("<parametros>")" "{" <l_cmd> "}";
 <parametros> ::= <parametros>"," <parametrosvar> | <parametrosvar>;
 <parametrosvar> ::= <paravar> | <exp>;
 <retorno> ::= RETORNO <paravar> | RETORNO <exp>;
@@ -131,7 +131,7 @@ STRING: \"[^\n\r\"]*\"
 <exp7> ::= <exp7> <op_arit_baixa> <exp8> | <exp8>;
 <exp8> ::= <exp8> <op_arit_alta> <exp9> | <exp9> ;
 <exp9> ::= <op_neg> <exp10> | <exp10>;
-<exp10> ::= INTEIRO | REAL | VAR | "(" <exp> ")";
+<exp10> ::= INTEIRO | REAL | VAR | "(" <exp> ")" | VAR "("<parametros>")";
 <op_rel> ::= ">" | "<" | ">=" | "<=" | "=" | "!=" | "=="; 
 <op_neg> ::= "-" | "~" | "!";
 <op_bitwise> ::= "<<" | ">>";
