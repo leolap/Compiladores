@@ -79,6 +79,7 @@ STRING: \"[^\n\r\"]*\"
 <l_cmd>
 <cmd>
 <var>
+<tipo>
 <cmdse>
 <cmdenquanto>
 <comentario>
@@ -110,7 +111,8 @@ STRING: \"[^\n\r\"]*\"
 <init> ::= INICIO <l_cmd> FIM;
 <l_cmd> ::= <l_cmd> <cmd>| <cmd>;
 <cmd> ::= <var> ";"| <exp> ";" | <comentario> | <cmdse> | <cmdenquanto> | <inout>";" | <function> | <retorno> ";";
-<var> ::= TINT VAR "=" INTEIRO | TINT VAR"[" INTEIRO "]" | TFLOAT VAR "=" REAL | TBIN VAR "=" BINARIO | THEX VAR "=" HEXADECIMAL | TSTRING VAR "=" STRING | TFLOAT VAR"[" INTEIRO "]" | TBIN VAR"[" INTEIRO "]" | THEX VAR"[" INTEIRO "]" | TSTRING VAR"[" INTEIRO "]";
+<var> ::= <tipo> VAR#2 | <tipo> VAR#2 "[" INTEIRO "]" | <tipo> VAR#2 "=" <exp> ;
+<tipo> ::= TINT #1| TFLOAT #1| THEX #1| TBIN #1| TSTRING #1;
 <cmdse> ::= SE"(" <exp> ")" "{"<l_cmd>"}" | SE"(" <exp> ")" "{"<l_cmd>"}"SENAO "{" <l_cmd> "}" ;
 <cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <exp> ")" "{" <l_cmd> "}";
 <paravar> ::= VAR | <var>;
