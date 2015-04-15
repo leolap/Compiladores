@@ -115,11 +115,11 @@ STRING: \"[^\n\r\"]*\"
 <tipo> ::= TINT #1| TFLOAT #1| THEX #1| TBIN #1| TSTRING #1;
 <cmdse> ::= SE"(" <exp> ")" "{"<l_cmd>"}" | SE"(" <exp> ")" "{"<l_cmd>"}"SENAO "{" <l_cmd> "}" ;
 <cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <exp> ")" "{" <l_cmd> "}";
-<paravar> ::= VAR | <var>;
+<paravar> ::= VAR#4 | <var>;
 <inout> ::= LEIA "(" VAR ")" | ESCREVA "("<escrevavar>")";
 <escrevavar> ::= VAR | STRING;
 <comentario> ::= COMENTARIO | MCOMENTARIO;
-<function> ::= FUNCTION VAR "("<parametros>")" "{" <l_cmd> "}";
+<function> ::= FUNCTION VAR#3 "("<parametros>")"#5 "{" <l_cmd> "}"#6;
 <parametros> ::= <parametros>"," <parametrosvar> | <parametrosvar>;
 <parametrosvar> ::= <paravar> | <exp>;
 <retorno> ::= RETORNO <paravar> | RETORNO <exp>;
