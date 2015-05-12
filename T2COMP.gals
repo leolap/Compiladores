@@ -6,8 +6,8 @@ ScannerName = Lexico
 ParserName = Sintatico
 SemanticName = Semantico
 ScannerCaseSensitive = true
-ScannerTable = Full
-Input = Stream
+ScannerTable = Compact
+Input = String
 Parser = SLR
 #RegularDefinitions
 D : [0-9]
@@ -80,6 +80,7 @@ STRING: \"[^\n\r\"]*\"
 <cmd>
 <var>
 <tipo>
+<atr>
 <cmdse>
 <cmdenquanto>
 <comentario>
@@ -108,20 +109,21 @@ STRING: \"[^\n\r\"]*\"
 <op_arit_alta>
 <op_arit_mais_alta>
 #Grammar
-<init> ::= INICIO <l_cmd> FIM;
+<init> ::= INICIO <l_cmd> FIM#11;
 <l_cmd> ::= <l_cmd> <cmd>| <cmd>;
 <cmd> ::= <var> ";"| <exp> ";" | <comentario> | <cmdse> | <cmdenquanto> | <inout>";" | <function> | <retorno> ";";
-<var> ::= <tipo> VAR#2 | <tipo> VAR#2 "[" INTEIRO "]" | <tipo> VAR#2 "=" <exp> ;
+<var> ::= <tipo> VAR#2 | <tipo> VAR#7 "[" INTEIRO#8 "]" | <tipo> VAR#12 "=" <exp> ;
 <tipo> ::= TINT #1| TFLOAT #1| THEX #1| TBIN #1| TSTRING #1;
+<atr> ::= VAR#13 "=" <exp> | VAR#14 "[" INTEIRO#15 "]" "=" <exp>;
 <cmdse> ::= SE"(" <exp> ")" "{"<l_cmd>"}" | SE"(" <exp> ")" "{"<l_cmd>"}"SENAO "{" <l_cmd> "}" ;
-<cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <exp> ")" "{" <l_cmd> "}";
-<paravar> ::= VAR#4 | <var>;
-<inout> ::= LEIA "(" VAR ")" | ESCREVA "("<escrevavar>")";
-<escrevavar> ::= VAR | STRING;
+<cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <atr> ")" "{" <l_cmd> "}";
+<paravar> ::= VAR | <var>;
+<inout> ::= LEIA "(" VAR#9 ")" | ESCREVA "("<escrevavar>")";
+<escrevavar> ::= VAR#10 | STRING;
 <comentario> ::= COMENTARIO | MCOMENTARIO;
 <function> ::= FUNCTION VAR#3 "("<parametros>")"#5 "{" <l_cmd> "}"#6;
 <parametros> ::= <parametros>"," <parametrosvar> | <parametrosvar>;
-<parametrosvar> ::= <paravar> | <exp>;
+<parametrosvar> ::= <paravar> | <exp> | <atr>;
 <retorno> ::= RETORNO <paravar> | RETORNO <exp>;
 <exp>  ::= <exp> "||" <exp1> | <exp1>;
 <exp1> ::= <exp1> "&&" <exp2> | <exp2>;
@@ -133,8 +135,8 @@ STRING: \"[^\n\r\"]*\"
 <exp7> ::= <exp7> <op_arit_baixa> <exp8> | <exp8>;
 <exp8> ::= <exp8> <op_arit_alta> <exp9> | <exp9> ;
 <exp9> ::= <op_neg> <exp10> | <exp10>;
-<exp10> ::= INTEIRO | REAL | VAR | "(" <exp> ")" | VAR "("<parametros>")";
-<op_rel> ::= ">" | "<" | ">=" | "<=" | "=" | "!=" | "=="; 
+<exp10> ::= INTEIRO | REAL | VAR#4 | "(" <exp> ")" | VAR "("<parametros>")";
+<op_rel> ::= ">" | "<" | ">=" | "<=" | "!=" | "=="; 
 <op_neg> ::= "-" | "~" | "!";
 <op_bitwise> ::= "<<" | ">>";
 <op_arit_baixa> ::= "+" | "-";
