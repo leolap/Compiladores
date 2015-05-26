@@ -126,7 +126,7 @@ public class Semantico implements Constants
             break;
             case 10:
                 for (Var variavel : matriz) {
-                    if(variavel.getNome().equals(token.getLexeme())){
+                    if(variavel.getNome().equals(token.getLexeme()) && variavel.getEscopo().equals(escopo)){
                         variavel.setUsado(true);
                         if(!variavel.isIniciado()){
                             throw new SemanticError(variavel.getNome()+" não inicializada", token.getPosition());
@@ -136,7 +136,7 @@ public class Semantico implements Constants
             break;
             case 11:
                 for (Var variavel : matriz) {
-                    if(!(variavel.isIniciado() || variavel.isUsado())){
+                    if(!(variavel.isUsado()) && !(variavel.getTipo().equals("funcao"))){
                         throw new SemanticError(variavel.getNome()+" não utilizada", token.getPosition());
                     }
                 }

@@ -3,18 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/Constants.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/SemanticError.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/Token.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/LexicalError.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/ParserConstants.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/JanelaPrincipal.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/SyntaticError.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/AnalysisError.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/ScannerConstants.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/Sintatico.java</file>
+            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/Var.java</file>
             <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/Semantico.java</file>
-            <file>file:/C:/Users/4416970/Desktop/TRABALHO/IDE2/src/ide2/Lexico.java</file>
         </group>
     </open-files>
 </project-private>
