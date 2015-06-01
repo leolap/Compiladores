@@ -21,6 +21,7 @@ public class Semantico implements Constants
     private String stov = "";
     private boolean logico = false;
     private Temporario tempIndVetor;
+    private String operacao = "";
     
     public Semantico() {
         this.matriz = new ArrayList();    
@@ -270,6 +271,37 @@ public class Semantico implements Constants
                         this.freeTemp(t.getNome());
                         this.freeTemp(tempIndVetor.getNome());
                 }
+            case 29:
+                operacao = lex;
+            break;
+            case 30:
+                if(operacao.equals("")){
+                        text.append("LDI ").append(lex).append(" \n");
+                } else {
+                    if (operacao.equals("+")){
+                        text.append("ADDI ").append(lex).append(" \n");
+                    }
+                    if (operacao.equals("-")){
+                        text.append("SUBI ").append(lex).append(" \n");
+                    }
+                   operacao = "";
+                }
+            break;
+            case 31:
+                if(operacao.equals("")){
+                        text.append("LD ").append(lex).append(" \n");
+                } else {
+                    if (operacao.equals("+")){
+                        text.append("ADD ").append(lex).append(" \n");
+                    }
+                    if (operacao.equals("-")){
+                        text.append("SUB ").append(lex).append(" \n");
+                    }
+                   operacao = "";
+                }
+            break;
+             
+                
         }
     }
 

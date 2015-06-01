@@ -135,9 +135,9 @@ STRING: \"[^\n\r\"]*\"
 <exp7> ::= <exp7> <op_arit_baixa> <exp8> | <exp8>;
 <exp8> ::= <exp8> <op_arit_alta> <exp9> | <exp9> ;
 <exp9> ::= <op_neg> <exp10> | <exp10>;
-<exp10> ::= INTEIRO | REAL | VAR#4 | "(" <exp> ")" | VAR "("<parametros>")";
+<exp10> ::= INTEIRO #30 | REAL #30 | VAR#4#31 | "(" <exp> ")" | VAR "("<parametros>")" | VAR#31 "[" INTEIRO#33 "]";
 <op_rel> ::= ">" | "<" | ">=" | "<=" | "!=" | "=="; 
 <op_neg> ::= "-" | "~" | "!";
 <op_bitwise> ::= "<<" | ">>";
-<op_arit_baixa> ::= "+" | "-";
-<op_arit_alta> ::= "*" | "/" | "%";
+<op_arit_baixa> ::= "+" #29 | "-" #29 ;
+<op_arit_alta> ::= "*" #29 | "/" #29 | "%" #29;
