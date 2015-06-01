@@ -12,8 +12,45 @@ public class Semantico implements Constants
     private int posicao = 0;
     private int tamanhoMatriz = 0;
     private String nomeVet = " ";
+    private List<Temporario> temporarios;
+    private int countTemp = 0;
+    private StringBuilder data;
+    private StringBuilder text;
+    private boolean inic = false;
+    private String sto = "";
+    private String stov = "";
+    private boolean logico = false;
+    private Temporario tempIndVetor;
+    
     public Semantico() {
         this.matriz = new ArrayList();    
+        this.temporarios = new ArrayList();
+        data.append(".data\n");
+        text.append(".text\n");
+        
+    }    
+    
+    public Temporario getTemp(){
+        for (Temporario t : this.temporarios) {
+            if(t.isLivre()){
+                return t;
+            }
+        }
+        Temporario novoTemporario = new Temporario();
+        countTemp++;
+        novoTemporario.setLivre(false);
+        novoTemporario.setNome("temp"+countTemp);
+        data.append(novoTemporario.getNome()).append(" : 0 \n");
+        temporarios.add(novoTemporario);
+        return novoTemporario;
+    }
+    
+    public void freeTemp(String temp){
+       for (Temporario t : this.temporarios) {
+            if(t.getNome().equals(temp)){
+                t.setLivre(true);
+            }
+        } 
     }
     
     public void insereMatriz(){
@@ -191,6 +228,48 @@ public class Semantico implements Constants
                 }
                 nomeVet = "";    
             break;
+            case 21:
+                data.append(lex).append(": 0 \n");
+            break;
+            case 22:
+                 data.append(lex).append(" : 0");
+            break;
+            case 23:
+                int qtd = Integer.parseInt(lex);
+                for (int i = 0; i < qtd-1; i++) {
+                    data.append(", 0");
+                }
+                data.append("\n");
+            break;
+            case 24:
+                data.append(lex);
+                inic = true;
+            break;
+            case 25:
+                sto = lex;
+            break;
+            case 26:
+                stov = lex;
+            break;
+            case 27:
+                text.append("LDI ").append(lex).append("\n");
+                tempIndVetor = this.getTemp();
+                text.append("STO ").append(tempIndVetor.getNome()).append("\n");
+            break;
+            case 28:
+                if(!sto.equals("")){
+                    text.append("STO ").append(sto).append("\n");
+                }
+                if(!stov.equals("")){
+                        Temporario t = this.getTemp();
+                        text.append("STO ").append(t.getNome()).append("\n ");
+                        text.append("LD ").append(tempIndVetor.getNome()).append("\n ");
+                        text.append("STO $indr \n");
+                        text.append("LD ").append(t.getNome()).append("\n ");
+                        text.append("STOV ").append(stov).append("\n");
+                        this.freeTemp(t.getNome());
+                        this.freeTemp(tempIndVetor.getNome());
+                }
         }
     }
 

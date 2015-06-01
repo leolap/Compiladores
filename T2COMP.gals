@@ -7,7 +7,7 @@ ParserName = Sintatico
 SemanticName = Semantico
 ScannerCaseSensitive = true
 ScannerTable = Compact
-Input = String
+Input = Stream
 Parser = SLR
 #RegularDefinitions
 D : [0-9]
@@ -111,10 +111,10 @@ STRING: \"[^\n\r\"]*\"
 #Grammar
 <init> ::= INICIO <l_cmd> FIM#11;
 <l_cmd> ::= <l_cmd> <cmd>| <cmd>;
-<cmd> ::= <var> ";"| <exp> ";" | <comentario> | <cmdse> | <cmdenquanto> | <inout>";" | <function> | <retorno> ";";
-<var> ::= <tipo> VAR#2 | <tipo> VAR#7 "[" INTEIRO#8 "]" | <tipo> VAR#12 "=" <exp> ;
+<cmd> ::= <var> ";"| <exp> ";" | <comentario> | <cmdse> | <cmdenquanto> | <inout>";" | <function> | <atr>";" |<retorno> ";";
+<var> ::= <tipo> VAR#2#21 | <tipo> VAR#7#22 "[" INTEIRO#8#23 "]" | <tipo> VAR#12#24 "=" <exp>#28 ;
 <tipo> ::= TINT #1| TFLOAT #1| THEX #1| TBIN #1| TSTRING #1;
-<atr> ::= VAR#13 "=" <exp> | VAR#14 "[" INTEIRO#15 "]" "=" <exp>;
+<atr> ::= VAR#13#25 "=" <exp> | VAR#14#26 "[" INTEIRO#15#27 "]" "=" <exp> #28;
 <cmdse> ::= SE"(" <exp> ")" "{"<l_cmd>"}" | SE"(" <exp> ")" "{"<l_cmd>"}"SENAO "{" <l_cmd> "}" ;
 <cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <atr> ")" "{" <l_cmd> "}";
 <paravar> ::= VAR | <var>;
