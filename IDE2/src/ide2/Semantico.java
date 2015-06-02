@@ -26,7 +26,6 @@ public class Semantico implements Constants
     private String nomeVetorP = "";
     private Temporario restoConta;
     private boolean treta = false;
-    private Temporario exp;
     
     public Semantico() {
         this.matriz = new ArrayList();    
@@ -269,6 +268,7 @@ public class Semantico implements Constants
                 if(!sto.equals("")){
                     text.append("STO ").append(sto).append("\n");
                     posEq = 0;
+                    sto = "";
                 }
                 if(!stov.equals("")){
                         Temporario t = this.getTemp();
@@ -280,6 +280,7 @@ public class Semantico implements Constants
                         this.freeTemp(t.getNome());
                         this.freeTemp(tempIndVetor.getNome());
                         posEq = 0;
+                        stov = "";
                 }
             break;
             case 29:
@@ -319,10 +320,16 @@ public class Semantico implements Constants
                 posEq++;
             break;
             case 32:
+                nomeVetorP = lex;
                 if(posEq != 0){
-                    restoConta = this.getTemp();
+                    restoConta = new Temporario();
+                    restoConta.setLivre(false);
+                    restoConta.setNome("tempR");
+                    if(!treta){
+                        data.append("tempR : 0 \n");
+                        treta = true;
+                    }
                     text.append("STO ").append(restoConta.getNome()).append(" \n");
-                    nomeVetorP = lex;
                 }else{
                     posEq++;
                 }
@@ -338,7 +345,7 @@ public class Semantico implements Constants
                     text.append("LD ").append(restoConta.getNome()).append(" \n");
                     text.append("ADD ").append(t.getNome()).append(" \n");
                     this.freeTemp(t.getNome());
-                    this.freeTemp(restoConta.getNome());
+                    restoConta.setLivre(true);
                 }
                 if (operacao.equals("-")){
                     Temporario t = this.getTemp();
@@ -346,7 +353,7 @@ public class Semantico implements Constants
                     text.append("LD ").append(restoConta.getNome()).append(" \n");
                     text.append("SUB ").append(t.getNome()).append("\n ");
                     this.freeTemp(t.getNome());
-                    this.freeTemp(restoConta.getNome());
+                    restoConta.setLivre(true);
                 }
                 operacao = "";
             break;
