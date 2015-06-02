@@ -31,8 +31,9 @@ public class Semantico implements Constants
     public Semantico() {
         this.matriz = new ArrayList();    
         this.temporarios = new ArrayList();
-        data.append(".data\n");
-        text.append(".text\n");
+        
+        this.data = new StringBuilder((".data\n"));
+        this.text = new StringBuilder((".text\n"));
         
     }    
     
@@ -158,6 +159,7 @@ public class Semantico implements Constants
             break;
             case 8:
                 var.setTamanhoVetor(Integer.parseInt(token.getLexeme()));
+                var.setUsado(true);
                 insereMatriz();
             break;
             case 9:
@@ -178,6 +180,7 @@ public class Semantico implements Constants
                 }
             break;
             case 11:
+                text.append("HLT 0 \n");
                 for (Var variavel : matriz) {
                     if(!(variavel.isUsado()) && !(variavel.getTipo().equals("funcao"))){
                         throw new SemanticError(variavel.getNome()+" não utilizada", token.getPosition());
@@ -278,10 +281,15 @@ public class Semantico implements Constants
                         this.freeTemp(tempIndVetor.getNome());
                         posEq = 0;
                 }
+            break;
             case 29:
                 operacao = lex;
             break;
             case 30:
+            if(inic){
+                    data.append(" : ").append(lex).append(" \n");
+                    inic = false;
+            }else{
                 if(operacao.equals("")){
                         text.append("LDI ").append(lex).append(" \n");
                 } else {
@@ -294,6 +302,7 @@ public class Semantico implements Constants
                    operacao = "";
                 }
                 posEq++;
+            }
             break;
             case 31:
                 if(operacao.equals("")){

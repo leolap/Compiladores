@@ -181,7 +181,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         erros = e.getMessage();
         }
         
-        StringBuffer asm = new StringBuffer();
+        StringBuilder asm = new StringBuilder();
         asm.append(semantico.getData().toString()).append("\n ").append(semantico.getText());
         textAreaAsm.setText(asm.toString());
         textAreaErros.setText(erros);
