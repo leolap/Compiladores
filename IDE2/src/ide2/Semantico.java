@@ -39,6 +39,7 @@ public class Semantico implements Constants
     public Temporario getTemp(){
         for (Temporario t : this.temporarios) {
             if(t.isLivre()){
+                t.setLivre(false);
                 return t;
             }
         }

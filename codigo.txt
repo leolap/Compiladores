@@ -1,8 +1,12 @@
 inicio
 	int a;
 	int b;
+	int c[6];
+	int d;
 	a = 2;
-	b = a + 2;
+	c[1] = a;
+	leia(d);
+	b = c[1] + 2 + d + c[1];
 	escreva(b);
 	
 fim
