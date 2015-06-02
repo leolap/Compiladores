@@ -1,28 +1,10 @@
 inicio
-	funcao func(int a = 0, int b = 0){
-		int d[10] ;
-		a = a + b;
-		retorno a;
-	}
-	
-	float c = 0;
-	leia ( c );
-	se ( c > 10 || c < 8 && 1 <=9 ){
-	  c = func( 10, 20);
-	}senao{
-	  c = func( 10, 30);
-	}
-	faca{
-	  c = c + 1;
-	  para( int i = 0 ; i< 10 ; i=i+1 ){
-		c = c + 1;
-		}
-	}enquanto(c <= 100);
-	// escreve o ultimo valor de c
-	escreva ( c ); 
-	se ( c != 100 ){
-	    leia ( c );
-	}
+	int a = 1;
+	int b;
+	int c[5];
+	b = a + 2;
+	c[0] = a;
+	escreva(b);
 	
 fim
 	

@@ -22,6 +22,11 @@ public class Semantico implements Constants
     private boolean logico = false;
     private Temporario tempIndVetor;
     private String operacao = "";
+    private int posEq = 0;
+    private String nomeVetorP = "";
+    private Temporario restoConta;
+    private boolean treta = false;
+    private Temporario exp;
     
     public Semantico() {
         this.matriz = new ArrayList();    
@@ -260,6 +265,7 @@ public class Semantico implements Constants
             case 28:
                 if(!sto.equals("")){
                     text.append("STO ").append(sto).append("\n");
+                    posEq = 0;
                 }
                 if(!stov.equals("")){
                         Temporario t = this.getTemp();
@@ -270,6 +276,7 @@ public class Semantico implements Constants
                         text.append("STOV ").append(stov).append("\n");
                         this.freeTemp(t.getNome());
                         this.freeTemp(tempIndVetor.getNome());
+                        posEq = 0;
                 }
             case 29:
                 operacao = lex;
@@ -286,6 +293,7 @@ public class Semantico implements Constants
                     }
                    operacao = "";
                 }
+                posEq++;
             break;
             case 31:
                 if(operacao.equals("")){
@@ -299,8 +307,48 @@ public class Semantico implements Constants
                     }
                    operacao = "";
                 }
+                posEq++;
             break;
-             
+            case 32:
+                if(posEq != 0){
+                    restoConta = this.getTemp();
+                    text.append("STO ").append(restoConta.getNome()).append(" \n");
+                    nomeVetorP = lex;
+                }else{
+                    posEq++;
+                }
+            break;
+            case 33:
+                text.append("LDI ").append(lex).append(" \n");
+                text.append("STO $indr \n");
+                text.append("LDV ").append(nomeVetorP).append(" \n");
+                nomeVetorP = "";
+                if (operacao.equals("+")){
+                    Temporario t = this.getTemp();
+                    text.append("STO ").append(t.getNome()).append(" \n");
+                    text.append("LD ").append(restoConta.getNome()).append(" \n");
+                    text.append("ADD ").append(t.getNome()).append(" \n");
+                    this.freeTemp(t.getNome());
+                    this.freeTemp(restoConta.getNome());
+                }
+                if (operacao.equals("-")){
+                    Temporario t = this.getTemp();
+                    text.append("STO ").append(t.getNome()).append(" \n");
+                    text.append("LD ").append(restoConta.getNome()).append(" \n");
+                    text.append("SUB ").append(t.getNome()).append("\n ");
+                    this.freeTemp(t.getNome());
+                    this.freeTemp(restoConta.getNome());
+                }
+                operacao = "";
+            break;
+            case 34:
+                text.append("LD ").append(" $in_port").append(" \n");
+                text.append("STO ").append(lex).append(" \n");
+            break;
+            case 35:
+                text.append("LD ").append(lex).append(" \n");
+                text.append("STO ").append("$out_port").append(" \n");
+            break;
                 
         }
     }
@@ -312,6 +360,16 @@ public class Semantico implements Constants
     public int getTamanhoMatriz() {
         return tamanhoMatriz;
     }
+
+    public StringBuilder getData() {
+        return data;
+    }
+
+    public StringBuilder getText() {
+        return text;
+    }
+    
+    
     
     
 }

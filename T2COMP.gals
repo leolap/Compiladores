@@ -7,7 +7,7 @@ ParserName = Sintatico
 SemanticName = Semantico
 ScannerCaseSensitive = true
 ScannerTable = Compact
-Input = Stream
+Input = String
 Parser = SLR
 #RegularDefinitions
 D : [0-9]
@@ -118,8 +118,8 @@ STRING: \"[^\n\r\"]*\"
 <cmdse> ::= SE"(" <exp> ")" "{"<l_cmd>"}" | SE"(" <exp> ")" "{"<l_cmd>"}"SENAO "{" <l_cmd> "}" ;
 <cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <atr> ")" "{" <l_cmd> "}";
 <paravar> ::= VAR | <var>;
-<inout> ::= LEIA "(" VAR#9 ")" | ESCREVA "("<escrevavar>")";
-<escrevavar> ::= VAR#10 | STRING;
+<inout> ::= LEIA "(" VAR#9#34 ")" | ESCREVA "("<escrevavar>")";
+<escrevavar> ::= VAR#10#35 | STRING#35;
 <comentario> ::= COMENTARIO | MCOMENTARIO;
 <function> ::= FUNCTION VAR#3 "("<parametros>")"#5 "{" <l_cmd> "}"#6;
 <parametros> ::= <parametros>"," <parametrosvar> | <parametrosvar>;
@@ -135,7 +135,7 @@ STRING: \"[^\n\r\"]*\"
 <exp7> ::= <exp7> <op_arit_baixa> <exp8> | <exp8>;
 <exp8> ::= <exp8> <op_arit_alta> <exp9> | <exp9> ;
 <exp9> ::= <op_neg> <exp10> | <exp10>;
-<exp10> ::= INTEIRO #30 | REAL #30 | VAR#4#31 | "(" <exp> ")" | VAR "("<parametros>")" | VAR#31 "[" INTEIRO#33 "]";
+<exp10> ::= INTEIRO #30 | REAL #30 | VAR#4#31 | "(" <exp> ")" | VAR "("<parametros>")" | VAR#32 "[" INTEIRO#33 "]";
 <op_rel> ::= ">" | "<" | ">=" | "<=" | "!=" | "=="; 
 <op_neg> ::= "-" | "~" | "!";
 <op_bitwise> ::= "<<" | ">>";
