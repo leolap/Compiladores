@@ -56,6 +56,7 @@ public class Semantico implements Constants
        for (Temporario t : this.temporarios) {
             if(t.getNome().equals(temp)){
                 t.setLivre(true);
+                break;
             }
         } 
     }
@@ -323,13 +324,7 @@ public class Semantico implements Constants
             case 32:
                 nomeVetorP = lex;
                 if(posEq != 0){
-                    restoConta = new Temporario();
-                    restoConta.setLivre(false);
-                    restoConta.setNome("tempR");
-                    if(!treta){
-                        data.append("tempR : 0 \n");
-                        treta = true;
-                    }
+                    restoConta = this.getTemp();
                     text.append("STO ").append(restoConta.getNome()).append(" \n");
                 }else{
                     posEq++;
