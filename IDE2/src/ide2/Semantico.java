@@ -2,6 +2,7 @@ package ide2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Semantico implements Constants
 {
@@ -19,22 +20,32 @@ public class Semantico implements Constants
     private boolean inic = false;
     private String sto = "";
     private String stov = "";
-    private boolean logico = false;
+    private String opLogico = "";
     private Temporario tempIndVetor;
     private String operacao = "";
     private int posEq = 0;
     private String nomeVetorP = "";
     private Temporario restoConta;
-    private boolean treta = false;
+    private Temporario esquerda;
+    private Temporario direita;
+    private int countRot = 0;
+    private Stack<String> rotulos;
     
     public Semantico() {
         this.matriz = new ArrayList();    
         this.temporarios = new ArrayList();
+        this.rotulos = new Stack();
         
         this.data = new StringBuilder((".data\n"));
         this.text = new StringBuilder((".text\n"));
         
     }    
+    
+    public String getRotulo(){
+        countRot++;
+        rotulos.push("R"+countRot);
+        return "R"+countRot;
+    }
     
     public Temporario getTemp(){
         for (Temporario t : this.temporarios) {
@@ -360,6 +371,19 @@ public class Semantico implements Constants
             case 35:
                 text.append("LD ").append(lex).append(" \n");
                 text.append("STO ").append("$out_port").append(" \n");
+            break;
+            case 36:
+                opLogico = lex;
+                esquerda = this.getTemp();
+                text.append("STO ").append(esquerda.getNome()).append(" \n");
+            break;
+            case 37:
+                direita = this.getTemp();
+                text.append("STO ").append(direita.getNome()).append(" \n");
+                text.append("LD ").append(esquerda.getNome()).append(" \n");
+                text.append("SUB ").append(direita.getNome()).append(" \n");
+                esquerda.setLivre(true);
+                direita.setLivre(true);
             break;
                 
         }
