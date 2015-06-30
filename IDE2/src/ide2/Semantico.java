@@ -30,6 +30,11 @@ public class Semantico implements Constants
     private Temporario direita;
     private int countRot = 0;
     private Stack<String> rotulos;
+    private String rot;
+    private String rot2;
+    private boolean para = false;
+    //private String paraSto;
+    private StringBuilder paraAtr;
     
     public Semantico() {
         this.matriz = new ArrayList();    
@@ -38,6 +43,7 @@ public class Semantico implements Constants
         
         this.data = new StringBuilder((".data\n"));
         this.text = new StringBuilder((".text\n"));
+        this.paraAtr = new StringBuilder("");
         
     }    
     
@@ -45,6 +51,29 @@ public class Semantico implements Constants
         countRot++;
         rotulos.push("R"+countRot);
         return "R"+countRot;
+    }
+    
+    public void geraLogico(String op, String rotulo){
+        switch(op){
+                    case ">":
+                        text.append("BLE ").append(rotulo).append(" \n");
+                    break;
+                    case "<":
+                        text.append("BGE ").append(rotulo).append(" \n");
+                    break;
+                    case ">=":
+                        text.append("BLT ").append(rotulo).append(" \n");
+                    break;
+                    case "<=":
+                        text.append("BGT ").append(rotulo).append(" \n");
+                    break;
+                    case "==":
+                        text.append("BNE ").append(rotulo).append(" \n");
+                    break;
+                    case "!=":
+                        text.append("BEQ ").append(rotulo).append(" \n");
+                    break;
+        }
     }
     
     public Temporario getTemp(){
@@ -279,7 +308,11 @@ public class Semantico implements Constants
             break;
             case 28:
                 if(!sto.equals("")){
-                    text.append("STO ").append(sto).append("\n");
+                    if(!para){
+                        text.append("STO ").append(sto).append("\n");
+                    }else{
+                        paraAtr.append("STO ").append(sto).append("\n");
+                    }
                     posEq = 0;
                     sto = "";
                 }
@@ -305,13 +338,25 @@ public class Semantico implements Constants
                     inic = false;
             }else{
                 if(operacao.equals("")){
+                    if(!para){
                         text.append("LDI ").append(lex).append(" \n");
+                    }else{
+                        paraAtr.append("LDI ").append(lex).append(" \n");
+                    }
                 } else {
                     if (operacao.equals("+")){
-                        text.append("ADDI ").append(lex).append(" \n");
+                        if(!para){
+                            text.append("ADDI ").append(lex).append(" \n");
+                        }else{
+                            paraAtr.append("ADDI ").append(lex).append(" \n");
+                        }
                     }
                     if (operacao.equals("-")){
-                        text.append("SUBI ").append(lex).append(" \n");
+                        if(!para){
+                            text.append("SUBI ").append(lex).append(" \n");
+                        }else{
+                            paraAtr.append("SUBI ").append(lex).append(" \n");
+                        }
                     }
                    operacao = "";
                 }
@@ -320,13 +365,25 @@ public class Semantico implements Constants
             break;
             case 31:
                 if(operacao.equals("")){
-                        text.append("LD ").append(lex).append(" \n");
+                        if(!para){
+                            text.append("LD ").append(lex).append(" \n");
+                        }else{
+                            paraAtr.append("LD ").append(lex).append(" \n");
+                        }
                 } else {
                     if (operacao.equals("+")){
-                        text.append("ADD ").append(lex).append(" \n");
+                        if(!para){
+                            text.append("ADD ").append(lex).append(" \n");
+                        }else{
+                            paraAtr.append("ADD ").append(lex).append(" \n");
+                        }
                     }
                     if (operacao.equals("-")){
-                        text.append("SUB ").append(lex).append(" \n");
+                        if(!para){
+                            text.append("SUB ").append(lex).append(" \n");
+                        }else{
+                            paraAtr.append("SUB ").append(lex).append(" \n");
+                        }
                     }
                    operacao = "";
                 }
@@ -385,8 +442,46 @@ public class Semantico implements Constants
                 esquerda.setLivre(true);
                 direita.setLivre(true);
             break;
-                
+            case 38:
+                rot = this.getRotulo();
+                geraLogico(opLogico, rot);
+            break;
+            case 39:
+                rot = rotulos.pop();
+                text.append(rot2).append(":").append(" \n");
+            break;
+            case 40:
+                rot2 = rotulos.pop();
+                rot = getRotulo();
+                text.append("JMP ").append(rot).append(" \n");
+                text.append(rot2).append(": ").append(" \n");
+            break;
+            case 41:
+                rot = getRotulo();
+                text.append(rot).append(": ").append(" \n");
+            break;
+            case 42:
+                rot = this.getRotulo();
+                geraLogico(opLogico, rot);
+            break;
+            case 43:
+                rot2 = rotulos.pop();
+                rot = rotulos.pop();
+                text.append("JMP ").append(rot).append(" \n");
+                text.append(rot2).append(": ").append(" \n");
+            break;
+            case 44:
+                para = true;
+            break;
+            case 45:
+                para = false;
+            break;
+            case 46:
+                text.append(paraAtr.toString());
+                paraAtr = new StringBuilder("");
+            break;
         }
+    
     }
 
     public List<Var> getMatriz() {

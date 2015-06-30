@@ -115,9 +115,9 @@ STRING: \"[^\n\r\"]*\"
 <var> ::= <tipo> VAR#2#21 | <tipo> VAR#7#22 "[" INTEIRO#8#23 "]" | <tipo> VAR#12#24 "=" <exp>#28 ;
 <tipo> ::= TINT #1| TFLOAT #1| THEX #1| TBIN #1| TSTRING #1;
 <atr> ::= VAR#13#25 "=" <exp> | VAR#14#26 "[" INTEIRO#15#27 "]" "=" <exp> #28;
-<cmdse> ::= SE"(" <exp> ")" "{"<l_cmd>"}" | SE"(" <exp> ")" "{"<l_cmd>"}"SENAO "{" <l_cmd> "}" ;
-<cmdenquanto> ::= ENQUANTO "(" <exp> ")" "{" <l_cmd> "}" | FACA "{" <l_cmd> "}" ENQUANTO "(" <exp> ")" ";" | PARA "("<paravar> ";" <exp> ";" <atr> ")" "{" <l_cmd> "}";
-<paravar> ::= VAR | <var>;
+<cmdse> ::= SE"(" <exp> ")" "{"#38 <l_cmd> "}"#39 | SE"(" <exp> ")" "{"#38 <l_cmd> "}"SENAO "{"#40 <l_cmd> "}"#39 ;
+<cmdenquanto> ::= ENQUANTO "("#41 <exp> ")" "{"#42 <l_cmd> "}"#43 | FACA "{"#41 <l_cmd> "}" ENQUANTO "(" <exp> ")"#42 ";" | PARA "("<paravar> ";" <exp> ";" #44<atr>#45 ")"#41 "{"#42 <l_cmd> #46"}"#43;
+<paravar> ::= VAR | <atr> | <var>;
 <inout> ::= LEIA "(" VAR#9#34 ")" | ESCREVA "("<escrevavar>")";
 <escrevavar> ::= VAR#10#35 | STRING#35;
 <comentario> ::= COMENTARIO | MCOMENTARIO;
