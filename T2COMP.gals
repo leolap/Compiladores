@@ -7,7 +7,7 @@ ParserName = Sintatico
 SemanticName = Semantico
 ScannerCaseSensitive = true
 ScannerTable = Compact
-Input = Stream
+Input = String
 Parser = SLR
 #RegularDefinitions
 D : [0-9]
@@ -114,9 +114,9 @@ STRING: \"[^\n\r\"]*\"
 <cmd> ::= <var> ";"| <exp> ";" | <comentario> | <cmdse> | <cmdenquanto> | <inout>";" | <function> | <atr>";" |<retorno> ";";
 <var> ::= <tipo> VAR#2#21 | <tipo> VAR#7#22 "[" INTEIRO#8#23 "]" | <tipo> VAR#12#24 "=" <exp>#28 ;
 <tipo> ::= TINT #1| TFLOAT #1| THEX #1| TBIN #1| TSTRING #1;
-<atr> ::= VAR#13#25 "=" <exp> | VAR#14#26 "[" INTEIRO#15#27 "]" "=" <exp> #28;
+<atr> ::= VAR#13#25 "=" <exp> #28| VAR#14#26 "[" INTEIRO#15#27 "]" "=" <exp> #28;
 <cmdse> ::= SE"(" <exp> ")" "{"#38 <l_cmd> "}"#39 | SE"(" <exp> ")" "{"#38 <l_cmd> "}"SENAO "{"#40 <l_cmd> "}"#39 ;
-<cmdenquanto> ::= ENQUANTO "("#41 <exp> ")" "{"#42 <l_cmd> "}"#43 | FACA "{"#41 <l_cmd> "}" ENQUANTO "(" <exp> ")"#42 ";" | PARA "("<paravar> ";" <exp> ";" #44<atr>#45 ")"#41 "{"#42 <l_cmd> #46"}"#43;
+<cmdenquanto> ::= ENQUANTO "("#41 <exp> ")" "{"#42 <l_cmd> "}"#43 | FACA "{"#41 <l_cmd> "}" ENQUANTO "(" <exp> ")"#42 ";" | PARA "("<paravar> ";"#41 <exp> ";" #44<atr>#45 ")" "{"#42 <l_cmd> #46"}"#43;
 <paravar> ::= VAR | <atr> | <var>;
 <inout> ::= LEIA "(" VAR#9#34 ")" | ESCREVA "("<escrevavar>")";
 <escrevavar> ::= VAR#10#35 | STRING#35;
@@ -127,9 +127,9 @@ STRING: \"[^\n\r\"]*\"
 <retorno> ::= RETORNO <paravar> | RETORNO <exp>;
 <exp>  ::= <exp> "||" <exp1> | <exp1>;
 <exp1> ::= <exp1> "&&" <exp2> | <exp2>;
-<exp2> ::= <exp2> "|" <exp3> | <exp3>;
+<exp2> ::= <exp2> "|"#29 <exp3> | <exp3>;
 <exp3> ::= <exp3> "^" <exp4> | <exp4>;
-<exp4> ::= <exp4> "&" <exp5> | <exp5>;
+<exp4> ::= <exp4> "&"#29 <exp5> | <exp5>;
 <exp5> ::= <exp5> <op_rel> <exp6> #37 | <exp6>;
 <exp6> ::= <exp6> <op_bitwise> <exp7> | <exp7>;
 <exp7> ::= <exp7> <op_arit_baixa> <exp8> | <exp8>;
@@ -138,6 +138,6 @@ STRING: \"[^\n\r\"]*\"
 <exp10> ::= INTEIRO #30 | REAL #30 | VAR#4#31 | "(" <exp> ")" | VAR "("<parametros>")" | VAR#32 "[" INTEIRO#33 "]";
 <op_rel> ::= ">" #36 | "<" #36 | ">=" #36 | "<=" #36 | "!=" #36 | "==" #36; 
 <op_neg> ::= "-" | "~" | "!";
-<op_bitwise> ::= "<<" | ">>";
+<op_bitwise> ::= "<<"#29 | ">>"#29;
 <op_arit_baixa> ::= "+" #29 | "-" #29 ;
 <op_arit_alta> ::= "*" #29 | "/" #29 | "%" #29;

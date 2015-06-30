@@ -358,6 +358,18 @@ public class Semantico implements Constants
                             paraAtr.append("SUBI ").append(lex).append(" \n");
                         }
                     }
+                    if(operacao.equals("|")){
+                        text.append("ORI ").append(lex).append(" \n");
+                    }
+                    if(operacao.equals("&")){
+                        text.append("ANDI ").append(lex).append(" \n");
+                    }
+                    if(operacao.equals("<<")){
+                        text.append("SRL ").append(lex).append(" \n");
+                    }
+                    if(operacao.equals("<<")){
+                        text.append("SLL ").append(lex).append(" \n");
+                    }
                    operacao = "";
                 }
                 posEq++;
@@ -384,6 +396,18 @@ public class Semantico implements Constants
                         }else{
                             paraAtr.append("SUB ").append(lex).append(" \n");
                         }
+                    }
+                    if(operacao.equals("|")){
+                        text.append("OR ").append(lex).append(" \n");
+                    }
+                    if(operacao.equals("&")){
+                        text.append("AND ").append(lex).append(" \n");
+                    }
+                    if(operacao.equals("<<")){
+                        text.append("SRL ").append(lex).append(" \n");
+                    }
+                    if(operacao.equals("<<")){
+                        text.append("SLL ").append(lex).append(" \n");
                     }
                    operacao = "";
                 }
@@ -448,7 +472,7 @@ public class Semantico implements Constants
             break;
             case 39:
                 rot = rotulos.pop();
-                text.append(rot2).append(":").append(" \n");
+                text.append(rot).append(":").append(" \n");
             break;
             case 40:
                 rot2 = rotulos.pop();
